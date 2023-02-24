@@ -10,26 +10,40 @@ var forecastSection = $("#forecast");
 var groupAppend = $("#group-append");
 var storedCity = JSON.parse(localStorage.getItem("stored")) || [];
 
-function getStored() {
+
+
+function getStored(city) {
   localStorage.getItem("stored");
-    for (i = 0; i < storedCity.length; i++) {
-      console.log(storedCity[i]);
-      var historyBtn = $("<button>").text(storedCity[i]);
+  
+     console.log(city)
+      var historyBtn = $("<button>").text(city).addClass("history-btns")
       $("#history").append(historyBtn);
-    }
+    
+    $("#history").on("click", function(event){
+     const cityClick = event.target.textContent
+     renderCityData(cityClick)
+    })
   }
 
-function storeCity() {
-  localStorage.setItem("stored", JSON.stringify(storedCity));
+  for (let i =0; i<storedCity.length; i++) {
+
+    getStored(storedCity[i])
+  }
+
+
+function storeCity(cityName) {
+  if (!storedCity.includes(cityName)) {
+    storedCity.push(cityName);
+    localStorage.setItem("stored", JSON.stringify(storedCity));
+    getStored(cityName)
+
+  }
+
+
 }
 
-function renderCityData() {
-  searchBtn.on("click", function (event) {
-    event.preventDefault();
-    todaySection.empty();
-    forecastSection.empty();
-    forecastedtitle.empty();
-    var cityName = searchInput.val().trim();
+function renderCityData(cityName) {
+
 
     if (cityName) {
       var queryURL =
@@ -37,15 +51,15 @@ function renderCityData() {
         cityName +
         "&units=metric&appid=" +
         APIkey;
-      storedCity.push(cityName);
-      storeCity()
-      getStored();
+      
+      storeCity(cityName)
 
       $.ajax({
         url: queryURL,
         method: "GET",
       }).then(function (response) {
         console.log(response);
+        todaySection.empty()
 
         todaySection.addClass("today");
         var currentDate = moment.unix(response.dt).format("MM/DD/YYYY");
@@ -75,6 +89,8 @@ function renderCityData() {
           method: "GET",
         }).then(function (response) {
           console.log(response);
+          forecastSection.empty()
+          forecastedtitle.empty()
           var ftitle = $("<h4>")
             .text("5-day Forecast:")
             .attr("id", "forecast-section");
@@ -116,6 +132,10 @@ function renderCityData() {
         });
       });
     }
-  });
-}
-renderCityData();
+  }
+
+searchBtn.on("click", function (event) {
+  event.preventDefault();
+  var cityName = searchInput.val().trim();
+  renderCityData(cityName)
+})
