@@ -30,6 +30,7 @@ This project required us to hit the following requirements;
 
 ## Link to deployed website
 
+https://rbcheung.github.io/Weather-Dashboard/
 
 
 
