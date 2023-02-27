@@ -5,7 +5,7 @@ header {
     color: white;
 }
 body {
-    background-image: url("./Images/WeatherSeasons.jpg");
+    background-image: url("../../Images/WeatherSeasons.jpg");
     background-size: cover;
 }
 
@@ -33,7 +33,7 @@ body {
     
 }
 .history-btns {
-    width: 98%;
+    width: 98% !important;
     margin: 5px;
     background-color: #343a40 !important;
     border: black !important
@@ -52,4 +52,10 @@ margin-top: 10px;
 }
 .input-group {
 width: 100% !important;
+}
+.hr {
+    background-color: white;
+    height: 2px;
+    border: none;
+    width:98%;
 }

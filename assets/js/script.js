@@ -1,6 +1,6 @@
 var searchInput = $("#search-input");
 var searchBtn = $("#search-button");
-var clearBtn = $("#clear-button")
+var clearBtn = $("#clear-button");
 var APIkey = "fbc2d5bbada0f27cef0820ef96772def";
 var todaySection = $("#today");
 var forecastedtitle = $("#forecasted");
@@ -8,13 +8,14 @@ var forecastSection = $("#forecast");
 var groupAppend = $("#group-append");
 var storedCity = JSON.parse(localStorage.getItem("stored")) || [];
 
-
 // function to get local storage items and create buttons that will render api data on a click.
 function getStored(city) {
   localStorage.getItem("stored");
 
-  console.log(city);
-  var historyBtn = $("<button>").text(city).addClass("history-btns btn btn-primary btn-block");
+  // console.log(city);
+  var historyBtn = $("<button>")
+    .text(city)
+    .addClass("history-btns btn btn-primary btn-block");
   $("#history").append(historyBtn);
 
   $("#history").on("click", function (event) {
@@ -50,9 +51,9 @@ function renderCityData(cityName) {
       url: queryURL,
       method: "GET",
     }).then(function (response) {
-      console.log(response);
+      // console.log(response);
       todaySection.empty();
-      searchInput.val("")
+      searchInput.val("");
 
       todaySection.addClass("today");
       var currentDate = moment.unix(response.dt).format("MM/DD/YYYY");
@@ -81,17 +82,17 @@ function renderCityData(cityName) {
         url: `https://api.openweathermap.org/data/2.5/forecast?lat=${response.coord.lat}&lon=${response.coord.lon}&appid=${APIkey}`,
         method: "GET",
       }).then(function (response) {
-        console.log(response);
+        // console.log(response);
         forecastSection.empty();
         forecastedtitle.empty();
         var ftitle = $("<h4>")
           .text("5-day Forecast:")
           .attr("id", "forecast-section");
         forecastedtitle.append(ftitle);
-        console.log(ftitle);
+        // console.log(ftitle);
 
         for (var i = 0; i < response.list.length; i += 8) {
-          console.log(response.list[i]);
+          // console.log(response.list[i]);
           var futureDate = moment
             .unix(response.list[i].dt)
             .format("MM/DD/YYYY");
@@ -135,16 +136,16 @@ searchBtn.on("click", function (event) {
 });
 
 // Event listener for enter keypress. When clicked get the value from input and render data for the city chosen.
-searchInput.keypress(function(event){
-if (event.which == 13) {
-  event.preventDefault();
-  var cityName = searchInput.val().trim();
-  renderCityData(cityName);
-}
-}) 
+searchInput.keypress(function (event) {
+  if (event.which == 13) {
+    event.preventDefault();
+    var cityName = searchInput.val().trim();
+    renderCityData(cityName);
+  }
+});
 
-clearBtn.on("click", function (){
-  localStorage.clear()
-  location.reload()
-})
-
+// click event listener for clear button. When clicked local storage cleared and page refreshed to show changes.
+clearBtn.on("click", function () {
+  localStorage.clear();
+  location.reload();
+});
