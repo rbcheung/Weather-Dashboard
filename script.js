@@ -33,7 +33,7 @@ function storeCity(cityName) {
   }
 }
 
-// Function to get API data using Ajax and then appended to page.
+// Function to get API data using Ajax and then data appended to page.
 function renderCityData(cityName) {
   if (cityName) {
     var queryURL =
