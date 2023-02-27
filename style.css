@@ -1,17 +1,42 @@
 header {
     text-align: center;
 }
+* {
+    color: white;
+}
+body {
+    background-image: url("./Images/WeatherSeasons.jpg");
+    background-size: cover;
+}
 
 .today {
     border: solid lightgray;
     padding: 5px;
+    background-color: #343a40;
 }
 #search-input {
-    width: 100%;
+    margin-left: 5px;
+    width: 98%;
+    color: #343a40;
 }
 #search-button {
-    width: 100%;
-    margin-top:10px
+    width: 98%;
+    margin: 5px;
+    border: black;
+    
+}
+#clear-button {
+    width: 98%;
+    margin: 5px;
+    background-color: red !important;
+    border: black;
+    
+}
+.history-btns {
+    width: 98%;
+    margin: 5px;
+    background-color: #343a40 !important;
+    border: black !important
 }
 
 .card-div {
@@ -20,14 +45,11 @@ header {
     margin: 10px;
     margin-top: 1px;
     width: 189px;
+    background-color: #343a40
 }
-
 #forecast-section {
-
-    margin-top: 20px;
-
+margin-top: 10px;
 }
-
-.history-btns {
-    margin: 5px;
+.input-group {
+width: 100% !important;
 }

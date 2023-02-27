@@ -1,5 +1,6 @@
 var searchInput = $("#search-input");
 var searchBtn = $("#search-button");
+var clearBtn = $("#clear-button")
 var APIkey = "fbc2d5bbada0f27cef0820ef96772def";
 var todaySection = $("#today");
 var forecastedtitle = $("#forecasted");
@@ -7,12 +8,13 @@ var forecastSection = $("#forecast");
 var groupAppend = $("#group-append");
 var storedCity = JSON.parse(localStorage.getItem("stored")) || [];
 
+
 // function to get local storage items and create buttons that will render api data on a click.
 function getStored(city) {
   localStorage.getItem("stored");
 
   console.log(city);
-  var historyBtn = $("<button>").text(city).addClass("history-btns");
+  var historyBtn = $("<button>").text(city).addClass("history-btns btn btn-primary btn-block");
   $("#history").append(historyBtn);
 
   $("#history").on("click", function (event) {
@@ -50,6 +52,7 @@ function renderCityData(cityName) {
     }).then(function (response) {
       console.log(response);
       todaySection.empty();
+      searchInput.val("")
 
       todaySection.addClass("today");
       var currentDate = moment.unix(response.dt).format("MM/DD/YYYY");
@@ -130,3 +133,18 @@ searchBtn.on("click", function (event) {
   var cityName = searchInput.val().trim();
   renderCityData(cityName);
 });
+
+// Event listener for enter keypress. When clicked get the value from input and render data for the city chosen.
+searchInput.keypress(function(event){
+if (event.which == 13) {
+  event.preventDefault();
+  var cityName = searchInput.val().trim();
+  renderCityData(cityName);
+}
+}) 
+
+clearBtn.on("click", function (){
+  localStorage.clear()
+  location.reload()
+})
+
